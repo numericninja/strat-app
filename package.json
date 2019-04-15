@@ -1,0 +1,40 @@
+{
+  "name": "strat-app",
+  "version": "1.0.0",
+  "description": "outil collaboratif d-aide a la reflexion strategique",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/numericninja/strat-app.git"
+  },
+  "keywords": [
+    "node",
+    "vue",
+    "survey",
+    "charts",
+    "voting",
+    "decision",
+    "strategy"
+  ],
+  "author": "Emilio",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/numericninja/strat-app/issues"
+  },
+  "homepage": "https://github.com/numericninja/strat-app#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mongoose": "^5.5.1",
+    "vue": "^2.6.10",
+    "vue-axios": "^2.1.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.11"
+  }
+}
