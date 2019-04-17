@@ -34,7 +34,7 @@
         <section class="section">
           <div class="container">
             <h1 class="title">
-              Observations stratégiques
+              Questions de stratégie
             </h1>
             <p class="subtitle">
               Penser le mouvement des gilets jaunes
@@ -47,7 +47,7 @@
                 >Ce n'est ni un sondage ni un vote. Les résultats qui y figurent
                 ne se prétendent pas représentatifs des opinions des Français,
                 ni même de ceux de l'ensemble des Gilets Jaunes. C'est
-                simplement une invitation à approfondir et à étendre les choix
+                simplement une invitation à approfondir et à élargir les choix
                 qui s'offrent à chacun.</span
               >
             </p>
@@ -80,7 +80,8 @@
                   La finalité du mouvement
                 </h3>
                 <p class="help">
-                  Appuyer sur une idée pour la soutenir.
+                  Appuyer sur une proposition pour la soutenir. Vous pouvez
+                  également soumettre de nouvelles idées en bas de chaque liste.
                 </p>
                 <div class="list is-hoverable margin-top-small scroll-inside">
                   <a
@@ -137,7 +138,7 @@
               <div class="column">
                 <h3 class="title is-4 is-marginless">Les revendications</h3>
                 <p class="help">
-                  Appuyer sur une idée pour la soutenir.
+                  Appuyer sur une proposition pour la soutenir.
                 </p>
                 <div class="list is-hoverable margin-top-small scroll-inside">
                   <a
@@ -198,7 +199,7 @@
               <div class="column">
                 <h3 class="title is-4 is-marginless">Choix stratégiques</h3>
                 <p class="help">
-                  Appuyer sur une idée pour la soutenir.
+                  Appuyer sur une proposition pour la soutenir.
                 </p>
                 <div class="list is-hoverable margin-top-small scroll-inside">
                   <a
@@ -260,6 +261,12 @@
                   l'effort de mise en place (temps, argent, nombre de
                   personnes...) et l'impact obtenu (combien l'action est
                   suceptible de faire avancer le mouvement).
+                </p>
+                <p class="help">
+                  Les actions en haut à gauche (quadrant vert) seraient celles
+                  qui requièrent le moins d'effort et qui apportent le plus
+                  d'impact. Plus une bulle est grande, et plus l'action a reçu
+                  du soutien.
                 </p>
 
                 <div
@@ -441,8 +448,7 @@
                         v-if="errorUpvoteActionpeusouhaitee.includes(actionpeusouhaitee._id)"
                         class="help is-danger"
                       >
-                        Choisir un 'effet' et un 'impact' pour soutenir cette
-                        idée.
+                        Choisir un 'effet' et un 'impact'.
                       </p>
                     </transition>
                     <div class="columns is-variable is-1">
@@ -592,7 +598,7 @@
                 </h3>
                 <p class="help">
                   Ce qui a déjà été gagné. Les petits succès qui montrent qu'on
-                  avance et que c'est possible.
+                  avance et que le changement est possible.
                 </p>
                 <div class="list is-hoverable margin-top-small scroll-inside">
                   <a
