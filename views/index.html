@@ -1713,7 +1713,7 @@
             );
             d3.json(hostname + "/actionsouhaitee/", function(data) {
               var myChart = new dimple.chart(svg, data);
-              myChart.setBounds(20, 20, widthOfChart - 40, 330);
+              myChart.setBounds(30, 30, widthOfChart - 60, 330);
               myChart.addMeasureAxis("x", "effort");
               myChart.addMeasureAxis("y", "impact");
               myChart.addMeasureAxis("z", "votes");
@@ -1834,7 +1834,7 @@
             );
             d3.json(hostname + "/actionpeusouhaitee/", function(data) {
               var myChart = new dimple.chart(svg, data);
-              myChart.setBounds(20, 20, widthOfChart - 40, 330);
+              myChart.setBounds(30, 30, widthOfChart - 60, 330);
               myChart.addMeasureAxis("x", "effort");
               myChart.addMeasureAxis("y", "impact");
               myChart.addMeasureAxis("z", "votes");
