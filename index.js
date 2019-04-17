@@ -17,6 +17,8 @@ app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname + "/views/index.html"));
 });
 
+app.use(express.static("views"));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
