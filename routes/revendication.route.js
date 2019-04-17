@@ -7,5 +7,6 @@ const revendication_controller = require("../controllers/revendication.controlle
 router.get("/:id", revendication_controller.revendication_details);
 router.post("/create", revendication_controller.revendication_create);
 router.put("/:id/upvote", revendication_controller.revendication_upvote);
+router.get("/", revendication_controller.revendication_list);
 
 module.exports = router;

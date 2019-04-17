@@ -2,12 +2,14 @@ const mongoose = require("mongoose");
 var uniqueValidator = require("mongoose-unique-validator");
 const Schema = mongoose.Schema;
 
-let RevendicationSchema = new Schema({
+let ActionpeusouhaiteeSchema = new Schema({
   name: { type: String, required: true, max: 100, unique: true },
   votes: { type: Number, required: true },
+  effort: { type: Number, required: true, max: 10, min: 0 },
+  impact: { type: Number, required: true, max: 10, min: 0 },
   created_at: { type: Date, required: true, default: Date.now }
 });
 
 // Export the model
-RevendicationSchema.plugin(uniqueValidator);
-module.exports = mongoose.model("Revendication", RevendicationSchema);
+ActionpeusouhaiteeSchema.plugin(uniqueValidator);
+module.exports = mongoose.model("Actionpeusouhaitee", ActionpeusouhaiteeSchema);

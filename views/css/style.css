@@ -1,0 +1,120 @@
+[v-cloak] {
+  display: none;
+}
+
+/* helpers  */
+.margin-top-xlarge {
+  margin-top: 120px;
+}
+.margin-top-large {
+  margin-top: 60px;
+}
+.margin-bottom-large {
+  margin-bottom: 60px;
+}
+.margin-top-medium {
+  margin-top: 30px;
+}
+.margin-top-small {
+  margin-top: 15px;
+}
+.margin-top-xs {
+  margin-top: 12px;
+}
+.margin-left-xs {
+  margin-left: 12px;
+}
+select.is-disabled,
+.is-disabled {
+  cursor: not-allowed !important;
+}
+
+/* image fresque */
+.bg-img {
+  background-image: url(/images/fresque.jpg);
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 300px;
+  background-image: url("/images/fresque.jpg"),
+    -moz-linear-gradient(top, #adb2b6 0%, #abaeb3 100%);
+  background-image: url("/images/fresque.jpg"),
+    -webkit-gradient(linear, left top, left bottom, color-stop(0%, #adb2b6), color-stop(100%, #abaeb3));
+  background-image: url("/images/fresque.jpg"),
+    linear-gradient(to bottom, #adb2b6, #abaeb3);
+}
+.bg-img .has-text-centered {
+  top: 210px;
+  position: relative;
+}
+
+/* scrollable lists */
+.scroll-inside {
+  max-height: 225px;
+  overflow-y: auto;
+}
+.scroll-inside.longer {
+  max-height: 260px;
+}
+.is-active a {
+  color: inherit;
+}
+.action-click.column.is-three-quarters-desktop {
+  cursor: pointer;
+}
+.is-disabled .action-click.column.is-three-quarters-desktop,
+.is-disabled .action-click.column.is-three-quarters-desktop a {
+  cursor: not-allowed !important;
+}
+
+/* chart css */
+rect,
+path {
+  fill-opacity: 0.8;
+}
+rect:hover,
+path:hover {
+  fill-opacity: 1;
+  cursor: pointer;
+}
+.background-rect {
+  fill-opacity: 0.1;
+}
+.background-rect:hover {
+  fill-opacity: 0.15;
+  cursor: initial;
+}
+circle {
+  cursor: pointer;
+}
+.domain.dimple-custom-axis-line {
+  stroke: rgba(0, 0, 0, 0.2) !important;
+}
+#chartContainerActionpeusouhaitee .dimple-axis-group,
+#chartContainerActionsouhaitee .dimple-axis-group {
+  display: none;
+}
+
+#chartContainerActionpeusouhaitee .dimple-gridlines-group,
+#chartContainerActionsouhaitee .dimple-gridlines-group {
+  opacity: 0.4;
+}
+
+/* vote animation */
+.plus-one {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: block;
+  padding-top: 25%;
+  padding-left: 41%;
+  font-size: 40px;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}

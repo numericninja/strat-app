@@ -3,6 +3,12 @@ const bodyParser = require("body-parser");
 
 const finalite = require("./routes/finalite.route");
 const revendication = require("./routes/revendication.route");
+const strategie = require("./routes/strategie.route");
+const actionsouhaitee = require("./routes/actionsouhaitee.route");
+const actionpeusouhaitee = require("./routes/actionpeusouhaitee.route");
+const acquis = require("./routes/acquis.route");
+const denouement = require("./routes/denouement.route");
+const jour = require("./routes/jour.route");
 
 const app = express();
 
@@ -11,6 +17,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use("/finalite", finalite);
 app.use("/revendication", revendication);
+app.use("/strategie", strategie);
+app.use("/actionsouhaitee", actionsouhaitee);
+app.use("/actionpeusouhaitee", actionpeusouhaitee);
+app.use("/acquis", acquis);
+app.use("/denouement", denouement);
+app.use("/jour", jour);
 
 // Set up mongoose connection
 const mongoose = require("mongoose");

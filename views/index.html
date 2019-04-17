@@ -5,38 +5,1918 @@
     <meta name="author" content="@emiliodib" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Outil collaboratif, réflexion stratégique</title>
-    <link rel="stylesheet" href="css/bulma.min.css?v=1.0" />
-    <link rel="stylesheet" href="css/style.css?v=1.0" />
+    <title>Outil collaboratif. Pensée stratégique.</title>
+    <link rel="stylesheet" href="css/bulma.min.css" />
+    <link rel="stylesheet" href="css/animate.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
-    <script src="js/vue.min.js"></script>
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- <script src="js/vue.min.js"></script> -->
     <script src="js/axios.min.js"></script>
-    <div id="app">
-      <p>{{ message }}</p>
+
+    <div v-cloak id="app">
+      <header></header>
+      <main>
+        <section class="section">
+          <div class="container">
+            <h1 class="title">
+              Observations stratégiques
+            </h1>
+            <p class="subtitle">
+              Penser le mouvement des gilets jaunes
+            </p>
+            <p>
+              Cet outil collaboratif est une aide à la réflexion stratégique. Il
+              permet de <strong>remonter</strong> et d'<strong>explorer</strong>
+              différentes idées de façon structurée.
+              <span class="has-text-grey"
+                >Ce n'est ni un sondage ni un vote. Les résultats qui y figurent
+                ne se prétendent pas représentatifs des opinions des Français,
+                ni même de ceux de l'ensemble des Gilets Jaunes. C'est
+                simplement une invitation à approfondir et à étendre les choix
+                qui s'offrent à chacun.</span
+              >
+            </p>
+            <div class="has-text-right margin-top-medium">
+              <strong>
+                {{
+                  acquisCont +
+                    finaliteCont +
+                    revendicationCont +
+                    denouementCont +
+                    strategieCont +
+                    jourCont +
+                    actionsouhaiteeCont +
+                    actionpeusouhaiteeCont +
+                    10000
+                }}
+              </strong>
+              contributions. <br /><small class="has-text-grey"
+                >Comptage façon Grand Débat ;-)</small
+              >
+            </div>
+          </div>
+        </section>
+
+        <section class="section has-background-white-bis">
+          <div class="container">
+            <div class="columns">
+              <div class="column">
+                <h3 class="title is-4 is-marginless">
+                  La finalité du mouvement
+                </h3>
+                <p class="help">
+                  Appuyer sur une idée pour la soutenir.
+                </p>
+                <div class="list is-hoverable margin-top-small scroll-inside">
+                  <a
+                    v-for="finalite in lesfinalites"
+                    class="list-item"
+                    @click="selected.includes(finalite._id) ? (1+1) : upVoteFinalite(finalite._id);selected.push(finalite._id)"
+                    :class="{'is-active is-disabled':selected.includes(finalite._id)}"
+                  >
+                    {{ finalite.name }}
+                  </a>
+                  <div class="list-item">
+                    <transition name="fade">
+                      <p v-if="errorFinalite" class="help is-danger">
+                        Entre 10 et 100 caractères.
+                      </p>
+                    </transition>
+                    <div class="field has-addons">
+                      <input
+                        class="input"
+                        maxlength="100"
+                        minlength="10"
+                        type="text"
+                        placeholder="Proposer une nouvelle finalité"
+                        v-on:keyup.enter="createFinalite"
+                        v-model="newFinalite"
+                      />
+                      <div class="control">
+                        <a class="button is-info" v-on:click="createFinalite"
+                          >⏎</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="column">
+                <div id="chart-finalite">
+                  <transition name="fade">
+                    <div
+                      v-if="showFinVote"
+                      class="plus-one has-text-grey slideInLeft animated"
+                    >
+                      +1
+                    </div>
+                  </transition>
+                  <div id="chartContainerFinalite"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="container margin-top-medium">
+            <div class="columns">
+              <div class="column">
+                <h3 class="title is-4 is-marginless">Les revendications</h3>
+                <p class="help">
+                  Appuyer sur une idée pour la soutenir.
+                </p>
+                <div class="list is-hoverable margin-top-small scroll-inside">
+                  <a
+                    v-for="revendication in lesrevendications"
+                    class="list-item"
+                    @click="selected.includes(revendication._id) ? (1+1) : upVoteRevendication(revendication._id);selected.push(revendication._id)"
+                    :class="{'is-active is-disabled':selected.includes(revendication._id)}"
+                  >
+                    {{ revendication.name }}
+                  </a>
+                  <div class="list-item">
+                    <transition name="fade">
+                      <p v-if="errorRevendication" class="help is-danger">
+                        Entre 10 et 100 caractères.
+                      </p>
+                    </transition>
+                    <div class="field has-addons">
+                      <input
+                        class="input"
+                        maxlength="100"
+                        minlength="10"
+                        type="text"
+                        placeholder="Proposer une nouvelle revendication"
+                        v-on:keyup.enter="createRevendication"
+                        v-model="newRevendication"
+                      />
+                      <div class="control">
+                        <a
+                          class="button is-info"
+                          v-on:click="createRevendication"
+                          >⏎</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="column">
+                <div id="chart-revendication">
+                  <transition name="fade">
+                    <div
+                      v-if="showRevVote"
+                      class="plus-one has-text-grey slideInLeft animated"
+                    >
+                      +1
+                    </div>
+                  </transition>
+                  <div id="chartContainerRevendication"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="container">
+            <div class="columns">
+              <div class="column">
+                <h3 class="title is-4 is-marginless">Choix stratégiques</h3>
+                <p class="help">
+                  Appuyer sur une idée pour la soutenir.
+                </p>
+                <div class="list is-hoverable margin-top-small scroll-inside">
+                  <a
+                    v-for="strategie in lesstrategies"
+                    class="list-item"
+                    @click="selected.includes(strategie._id) ? (1+1) : upVoteStrategie(strategie._id);selected.push(strategie._id)"
+                    :class="{'is-active is-disabled':selected.includes(strategie._id)}"
+                  >
+                    {{ strategie.name }}
+                  </a>
+                  <div class="list-item">
+                    <transition name="fade">
+                      <p v-if="errorStrategie" class="help is-danger">
+                        Entre 10 et 100 caractères.
+                      </p>
+                    </transition>
+                    <div class="field has-addons">
+                      <input
+                        class="input"
+                        maxlength="100"
+                        minlength="10"
+                        type="text"
+                        placeholder="Proposer une nouvelle stratégie"
+                        v-on:keyup.enter="createStrategie"
+                        v-model="newStrategie"
+                      />
+                      <div class="control">
+                        <a class="button is-info" v-on:click="createStrategie"
+                          >⏎</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="column">
+                <div id="chart-strategie">
+                  <transition name="fade">
+                    <div
+                      v-if="showStraVote"
+                      class="plus-one has-text-grey slideInLeft animated"
+                    >
+                      +1
+                    </div>
+                  </transition>
+                  <div id="chartContainerStrategie"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="container margin-top-medium margin-bottom-large">
+            <div class="columns">
+              <div class="column">
+                <h3 class="title is-4 is-marginless">Actions souhaitées</h3>
+                <p class="help">
+                  Actions possibles qui pourront permettre au mouvement
+                  d'accéder à ses revendications. Pour chaque action, estimer
+                  l'effort de mise en place (temps, argent, nombre de
+                  personnes...) et l'impact obtenu (combien l'action est
+                  suceptible de faire avancer le mouvement).
+                </p>
+
+                <div
+                  class="list is-hoverable margin-top-small scroll-inside longer"
+                >
+                  <div
+                    class="list-item"
+                    v-for="actionsouhaitee in lesactionssouhaitees"
+                    class="list-item"
+                    :class="{'is-active is-disabled':selected.includes(actionsouhaitee._id)}"
+                  >
+                    <transition name="fade">
+                      <p
+                        v-if="errorUpvoteActionsouhaitee.includes(actionsouhaitee._id)"
+                        class="help is-danger"
+                      >
+                        Choisir un 'effet' et un 'impact' pour soutenir cette
+                        idée.
+                      </p>
+                    </transition>
+                    <div class="columns is-variable is-1">
+                      <div
+                        class="action-click column is-three-quarters-desktop"
+                        @click="selected.includes(actionsouhaitee._id) ? (1+1) : upVoteActionsouhaitee(actionsouhaitee._id)"
+                      >
+                        <a>
+                          {{ actionsouhaitee.name }}
+                        </a>
+                      </div>
+                      <div class="column">
+                        <div class="field">
+                          <div class="control">
+                            <div class="select is-small is-warning">
+                              <select
+                                :disabled="selected.includes(actionsouhaitee._id) ? true : false"
+                                v-model="actionsouhaitee.selectedEffortUpvote"
+                                @change="((!selected.includes(actionsouhaitee._id)) && (actionsouhaitee.selectedImpactUpvote != 'choix-impact')) ? upVoteActionsouhaitee(actionsouhaitee._id) : (1+1)"
+                              >
+                                <option value="choix-effort" selected disabled
+                                  >Choix effort :&nbsp;&nbsp;</option
+                                >
+                                <option>Modéré</option>
+                                <option>Important</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="field">
+                          <div class="control">
+                            <div class="select is-small is-success">
+                              <select
+                                :disabled="selected.includes(actionsouhaitee._id) ? true : false"
+                                v-model="actionsouhaitee.selectedImpactUpvote"
+                                @change="((!selected.includes(actionsouhaitee._id)) && (actionsouhaitee.selectedEffortUpvote != 'choix-effort')) ? upVoteActionsouhaitee(actionsouhaitee._id) : (1+1)"
+                              >
+                                <option value="choix-impact" selected disabled
+                                  >Choix impact :</option
+                                >
+                                <option>Modéré</option>
+                                <option>Favorable</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="list-item">
+                    <div class="">
+                      <div class="">
+                        <transition name="fade">
+                          <p v-if="errorActionsouhaitee" class="help is-danger">
+                            Entre 10 et 100 caractères.
+                          </p>
+                          <p
+                            v-if="errorActionsouhaiteeChoix"
+                            class="help is-danger"
+                          >
+                            Choisir un 'effort' et un 'impact'.
+                          </p>
+                        </transition>
+                        <div class="field ">
+                          <input
+                            class="input"
+                            maxlength="100"
+                            minlength="10"
+                            type="text"
+                            placeholder="Proposer une nouvelle action"
+                            v-on:keyup.enter="createActionsouhaitee"
+                            v-model="newActionsouhaitee"
+                          />
+                        </div>
+                      </div>
+                      <div class="columns">
+                        <div class="column is-two-thirds">
+                          <div class="field is-grouped margin-top-xs">
+                            <div class="control">
+                              <div class="select is-warning">
+                                <select v-model="selectedEffort">
+                                  <option value="choix-effort" selected disabled
+                                    >Choix effort :</option
+                                  >
+                                  <option>Modéré</option>
+                                  <option>Important</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="control">
+                              <div class="select is-success">
+                                <select v-model="selectedImpact">
+                                  <option value="choix-impact" selected disabled
+                                    >Choix impact :</option
+                                  >
+                                  <option>Modéré</option>
+                                  <option>Favorable</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="column">
+                          <div class="field is-grouped is-grouped-right">
+                            <p class="control margin-top-xs">
+                              <a
+                                v-on:click="createActionsouhaitee"
+                                class="button is-info"
+                              >
+                                Contribuer ⏎
+                              </a>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="column">
+                <div id="chart-actionsouhaitee">
+                  <transition name="fade">
+                    <div
+                      v-if="showActsouhVote"
+                      class="plus-one has-text-grey slideInLeft animated"
+                    >
+                      +1
+                    </div>
+                  </transition>
+                  <div id="chartContainerActionsouhaitee"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="container margin-top-medium margin-bottom-large">
+            <div class="columns">
+              <div class="column">
+                <h3 class="title is-4 is-marginless">
+                  Actions peu souhaitables
+                </h3>
+                <p class="help">
+                  Actions à éviter ou à contrer, qui pourraient nuire au
+                  mouvement. Pour chaque action, estimer l'effort de mise en
+                  place et l'impact potentiel (combien l'action est suceptible
+                  de porter préjudice ou de discréditer le mouvement).
+                </p>
+
+                <div
+                  class="list is-hoverable margin-top-small scroll-inside longer"
+                >
+                  <div
+                    class="list-item"
+                    v-for="actionpeusouhaitee in lesactionspeusouhaitees"
+                    class="list-item"
+                    :class="{'is-active is-disabled':selected.includes(actionpeusouhaitee._id)}"
+                  >
+                    <transition name="fade">
+                      <p
+                        v-if="errorUpvoteActionpeusouhaitee.includes(actionpeusouhaitee._id)"
+                        class="help is-danger"
+                      >
+                        Choisir un 'effet' et un 'impact' pour soutenir cette
+                        idée.
+                      </p>
+                    </transition>
+                    <div class="columns is-variable is-1">
+                      <div
+                        class="action-click column is-three-quarters-desktop"
+                        @click="selected.includes(actionpeusouhaitee._id) ? (1+1) : upVoteActionpeusouhaitee(actionpeusouhaitee._id)"
+                      >
+                        <a>
+                          {{ actionpeusouhaitee.name }}
+                        </a>
+                      </div>
+                      <div class="column">
+                        <div class="field">
+                          <div class="control">
+                            <div class="select is-small is-warning">
+                              <select
+                                :disabled="selected.includes(actionpeusouhaitee._id) ? true : false"
+                                v-model="actionpeusouhaitee.selectedEffortUpvote"
+                                @change="((!selected.includes(actionpeusouhaitee._id)) && (actionpeusouhaitee.selectedImpactUpvote != 'choix-impact')) ? upVoteActionpeusouhaitee(actionpeusouhaitee._id) : (1+1)"
+                              >
+                                <option value="choix-effort" selected disabled
+                                  >Choix effort :&nbsp;&nbsp;</option
+                                >
+                                <option>Modéré</option>
+                                <option>Important</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="field">
+                          <div class="control">
+                            <div class="select is-small is-danger">
+                              <select
+                                :disabled="selected.includes(actionpeusouhaitee._id) ? true : false"
+                                v-model="actionpeusouhaitee.selectedImpactUpvote"
+                                @change="((!selected.includes(actionpeusouhaitee._id)) && (actionpeusouhaitee.selectedEffortUpvote != 'choix-effort')) ? upVoteActionpeusouhaitee(actionpeusouhaitee._id) : (1+1)"
+                              >
+                                <option value="choix-impact" selected disabled
+                                  >Choix impact :</option
+                                >
+                                <option>Modéré</option>
+                                <option>Défavorable</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="list-item">
+                    <div class="">
+                      <div class="">
+                        <transition name="fade">
+                          <p
+                            v-if="errorActionpeusouhaitee"
+                            class="help is-danger"
+                          >
+                            Entre 10 et 100 caractères.
+                          </p>
+                          <p
+                            v-if="errorActionpeusouhaiteeChoix"
+                            class="help is-danger"
+                          >
+                            Choisir un 'effort' et un 'impact'.
+                          </p>
+                        </transition>
+                        <div class="field ">
+                          <input
+                            class="input"
+                            maxlength="100"
+                            minlength="10"
+                            type="text"
+                            placeholder="Autre action à éviter"
+                            v-on:keyup.enter="createActionpeusouhaitee"
+                            v-model="newActionpeusouhaitee"
+                          />
+                        </div>
+                      </div>
+                      <div class="columns">
+                        <div class="column is-two-thirds">
+                          <div class="field is-grouped margin-top-xs">
+                            <div class="control">
+                              <div class="select is-warning">
+                                <select v-model="selectedEffortPeu">
+                                  <option value="choix-effort" selected disabled
+                                    >Choix effort :</option
+                                  >
+                                  <option>Modéré</option>
+                                  <option>Important</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="control">
+                              <div class="select is-danger">
+                                <select v-model="selectedImpactPeu">
+                                  <option value="choix-impact" selected disabled
+                                    >Choix impact :</option
+                                  >
+                                  <option>Modéré</option>
+                                  <option>Défavorable</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="column">
+                          <div class="field is-grouped is-grouped-right">
+                            <p class="control margin-top-xs">
+                              <a
+                                v-on:click="createActionpeusouhaitee"
+                                class="button is-info"
+                              >
+                                Contribuer ⏎
+                              </a>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="column">
+                <div id="chart-actionpeusouhaitee">
+                  <transition name="fade">
+                    <div
+                      v-if="showActpeusouhVote"
+                      class="plus-one has-text-grey slideInLeft animated"
+                    >
+                      +1
+                    </div>
+                  </transition>
+                  <div id="chartContainerActionpeusouhaitee"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section has-background-white-bis">
+          <div class="container">
+            <div class="columns">
+              <div class="column">
+                <h3 class="title is-4 is-marginless">
+                  Les acquis du mouvements
+                </h3>
+                <p class="help">
+                  Ce qui a déjà été gagné. Les petits succès qui montrent qu'on
+                  avance et que c'est possible.
+                </p>
+                <div class="list is-hoverable margin-top-small scroll-inside">
+                  <a
+                    v-for="acquis in lesacquis"
+                    class="list-item"
+                    @click="selected.includes(acquis._id) ? (1+1) : upVoteAcquis(acquis._id);selected.push(acquis._id)"
+                    :class="{'is-active is-disabled':selected.includes(acquis._id)}"
+                  >
+                    {{ acquis.name }}
+                  </a>
+                  <div class="list-item">
+                    <transition name="fade">
+                      <p v-if="errorAcquis" class="help is-danger">
+                        Entre 10 et 100 caractères.
+                      </p>
+                    </transition>
+                    <div class="field has-addons">
+                      <input
+                        class="input"
+                        maxlength="100"
+                        minlength="10"
+                        type="text"
+                        placeholder="Ajouter un acquis"
+                        v-on:keyup.enter="createAcquis"
+                        v-model="newAcquis"
+                      />
+                      <div class="control">
+                        <a class="button is-info" v-on:click="createAcquis"
+                          >⏎</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="column">
+                <div id="chart-acquis">
+                  <transition name="fade">
+                    <div
+                      v-if="showAcqVote"
+                      class="plus-one has-text-grey slideInLeft animated"
+                    >
+                      +1
+                    </div>
+                  </transition>
+                  <div id="chartContainerAcquis"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="container margin-top-medium">
+            <div class="columns">
+              <div class="column">
+                <h3 class="title is-4 is-marginless">Dénouements souhaités</h3>
+                <p class="help">
+                  Appuyer sur une idée pour la soutenir.
+                </p>
+                <div class="list is-hoverable margin-top-small scroll-inside">
+                  <a
+                    v-for="denouement in lesdenouements"
+                    class="list-item"
+                    @click="selected.includes(denouement._id) ? (1+1) : upVoteDenouement(denouement._id);selected.push(denouement._id)"
+                    :class="{'is-active is-disabled':selected.includes(denouement._id)}"
+                  >
+                    {{ denouement.name }}
+                  </a>
+                  <div class="list-item">
+                    <transition name="fade">
+                      <p v-if="errorDenouement" class="help is-danger">
+                        Entre 10 et 100 caractères.
+                      </p>
+                    </transition>
+                    <div class="field has-addons">
+                      <input
+                        class="input"
+                        maxlength="100"
+                        minlength="10"
+                        type="text"
+                        placeholder="Proposer un nouveau dénouement"
+                        v-on:keyup.enter="createDenouement"
+                        v-model="newDenouement"
+                      />
+                      <div class="control">
+                        <a class="button is-info" v-on:click="createDenouement"
+                          >⏎</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="column">
+                <div id="chart-denouement">
+                  <transition name="fade">
+                    <div
+                      v-if="showDenVote"
+                      class="plus-one has-text-grey slideInLeft animated"
+                    >
+                      +1
+                    </div>
+                  </transition>
+                  <div id="chartContainerDenouement"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="container margin-top-medium margin-bottom-large">
+            <div class="columns">
+              <div class="column">
+                <h3 class="title is-4 is-marginless">Le jour d'après</h3>
+                <p class="help">
+                  Ce qui doit se produire le lendemain de la victoire.
+                </p>
+                <div class="list is-hoverable margin-top-small scroll-inside">
+                  <a
+                    v-for="jour in lesjours"
+                    class="list-item"
+                    @click="selected.includes(jour._id) ? (1+1) : upVoteJour(jour._id);selected.push(jour._id)"
+                    :class="{'is-active is-disabled':selected.includes(jour._id)}"
+                  >
+                    {{ jour.name }}
+                  </a>
+                  <div class="list-item">
+                    <transition name="fade">
+                      <p v-if="errorJour" class="help is-danger">
+                        Entre 10 et 100 caractères.
+                      </p>
+                    </transition>
+                    <div class="field has-addons">
+                      <input
+                        class="input"
+                        maxlength="100"
+                        minlength="10"
+                        type="text"
+                        placeholder="Proposer une nouvelle idée"
+                        v-on:keyup.enter="createJour"
+                        v-model="newJour"
+                      />
+                      <div class="control">
+                        <a class="button is-info" v-on:click="createJour">⏎</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="column">
+                <div id="chart-jour">
+                  <transition name="fade">
+                    <div
+                      v-if="showJouVote"
+                      class="plus-one has-text-grey slideInLeft animated"
+                    >
+                      +1
+                    </div>
+                  </transition>
+                  <div id="chartContainerJour"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="has-text-centered margin-top-xlarge margin-bottom-large is-size-1"
+          >
+            ✊
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer bg-img">
+        <div class="content has-text-centered">
+          <p>
+            Site bâti par
+            <a href="https://twitter.com/emiliodib" target="_blank"
+              >@emiliodib</a
+            >. Open source. Licence MIT.
+          </p>
+        </div>
+      </footer>
     </div>
+
+    <script src="js/d3.min.js"></script>
+    <script src="js/dimple.min.js"></script>
     <script>
       axios.defaults.baseURL = "http://localhost:3300";
-      //   axios.defaults.headers.common["Authorization"] = AUTH_TOKEN;
       axios.defaults.headers.post["Content-Type"] =
         "application/x-www-form-urlencoded";
+      var hostname = "http://localhost:3300";
+
       new Vue({
         el: "#app",
         data() {
           return {
-            message: null
+            lesfinalites: null,
+            lesrevendications: null,
+            lesstrategies: null,
+            lesjours: null,
+            lesactionssouhaitees: null,
+            lesactionspeusouhaitees: null,
+            lesacquis: null,
+            lesdenouements: null,
+            selected: [],
+            newFinalite: "",
+            showFinVote: false,
+            errorFinalite: false,
+            newAcquis: "",
+            showAcqVote: false,
+            errorAcquis: false,
+            newRevendication: "",
+            showRevVote: false,
+            errorRevendication: false,
+            newDenouement: "",
+            showDenVote: false,
+            errorDenouement: false,
+            newStrategie: "",
+            showStraVote: false,
+            errorStrategie: false,
+            newJour: "",
+            showJouVote: false,
+            errorJour: false,
+            newActionsouhaitee: "",
+            showActsouhVote: false,
+            errorActionsouhaitee: false,
+            errorActionsouhaiteeChoix: false,
+            errorUpvoteActionsouhaitee: [],
+            selectedEffort: "choix-effort",
+            selectedImpact: "choix-impact",
+            newActionpeusouhaitee: "",
+            showActpeusouhVote: false,
+            errorActionpeusouhaitee: false,
+            errorActionpeusouhaiteeChoix: false,
+            errorUpvoteActionpeusouhaitee: [],
+            selectedEffortPeu: "choix-effort",
+            selectedImpactPeu: "choix-impact",
+            acquisCont: 2,
+            finaliteCont: 7,
+            revendicationCont: 1,
+            denouementCont: 3,
+            strategieCont: 4,
+            jourCont: 3,
+            actionsouhaiteeCont: 9,
+            actionpeusouhaiteeCont: 8
           };
         },
+        methods: {
+          upVoteFinalite: function(id) {
+            var zis = this;
+            axios
+              .put("/finalite/" + id + "/upvote/")
+              .then(function(response) {
+                zis.showFinVote = true;
+                setTimeout(function() {
+                  zis.showFinVote = false;
+                }, 1000);
+
+                axios
+                  .get("/finalite/")
+                  .then(function(response) {
+                    zis.lesfinalites = response.data;
+                  })
+                  .catch(error => console.log(error));
+              })
+              .catch(error => console.log(error));
+          },
+          upVoteAcquis: function(id) {
+            var zis = this;
+            axios
+              .put("/acquis/" + id + "/upvote/")
+              .then(function(response) {
+                zis.showAcqVote = true;
+                setTimeout(function() {
+                  zis.showAcqVote = false;
+                }, 1000);
+
+                axios
+                  .get("/acquis/")
+                  .then(function(response) {
+                    zis.lesacquis = response.data;
+                  })
+                  .catch(error => console.log(error));
+              })
+              .catch(error => console.log(error));
+          },
+          upVoteRevendication: function(id) {
+            var zis = this;
+            axios
+              .put("/revendication/" + id + "/upvote/")
+              .then(function(response) {
+                zis.showRevVote = true;
+                setTimeout(function() {
+                  zis.showRevVote = false;
+                }, 1000);
+
+                axios
+                  .get("/revendication/")
+                  .then(function(response) {
+                    zis.lesrevendications = response.data;
+                  })
+                  .catch(error => console.log(error));
+              })
+              .catch(error => console.log(error));
+          },
+          upVoteDenouement: function(id) {
+            var zis = this;
+            axios
+              .put("/denouement/" + id + "/upvote/")
+              .then(function(response) {
+                zis.showDenVote = true;
+                setTimeout(function() {
+                  zis.showDenVote = false;
+                }, 1000);
+
+                axios
+                  .get("/denouement/")
+                  .then(function(response) {
+                    zis.lesdenouements = response.data;
+                  })
+                  .catch(error => console.log(error));
+              })
+              .catch(error => console.log(error));
+          },
+          upVoteStrategie: function(id) {
+            var zis = this;
+            axios
+              .put("/strategie/" + id + "/upvote/")
+              .then(function(response) {
+                zis.showStraVote = true;
+                setTimeout(function() {
+                  zis.showStraVote = false;
+                }, 1000);
+
+                axios
+                  .get("/strategie/")
+                  .then(function(response) {
+                    zis.lesstrategies = response.data;
+                  })
+                  .catch(error => console.log(error));
+              })
+              .catch(error => console.log(error));
+          },
+          upVoteJour: function(id) {
+            var zis = this;
+            axios
+              .put("/jour/" + id + "/upvote/")
+              .then(function(response) {
+                zis.showJouVote = true;
+                setTimeout(function() {
+                  zis.showJouVote = false;
+                }, 1000);
+
+                axios
+                  .get("/jour/")
+                  .then(function(response) {
+                    zis.lesjours = response.data;
+                  })
+                  .catch(error => console.log(error));
+              })
+              .catch(error => console.log(error));
+          },
+          upVoteActionsouhaitee: function(id) {
+            var zis = this;
+            var effortToSend = zis.lesactionssouhaitees.find(x => x._id === id)
+              .selectedEffortUpvote;
+            var impactToSend = zis.lesactionssouhaitees.find(x => x._id === id)
+              .selectedImpactUpvote;
+
+            if (
+              effortToSend == "choix-effort" ||
+              impactToSend == "choix-impact"
+            ) {
+              zis.errorUpvoteActionsouhaitee.push(id);
+
+              setTimeout(function() {
+                zis.errorUpvoteActionsouhaitee.pop();
+              }, 3000);
+            } else {
+              let effortToSendValue = 0;
+              let impactToSendValue = 0;
+              effortToSend == "Modéré"
+                ? (effortToSendValue = 2)
+                : (effortToSendValue = 8);
+              impactToSend == "Modéré"
+                ? (impactToSendValue = 2)
+                : (impactToSendValue = 8);
+
+              axios
+                .put("/actionsouhaitee/" + id + "/upvote/", {
+                  impact: impactToSendValue,
+                  effort: effortToSendValue
+                })
+                .then(function(response) {
+                  zis.showActsouhVote = true;
+                  zis.selected.push(response.data);
+                  setTimeout(function() {
+                    zis.showActsouhVote = false;
+                  }, 1000);
+
+                  axios
+                    .get("/actionsouhaitee/")
+                    .then(function(response) {
+                      zis.lesactionssouhaitees = response.data;
+                      zis.lesactionssouhaitees.map(
+                        o => (o.selectedEffortUpvote = "choix-effort")
+                      );
+                      zis.lesactionssouhaitees.map(
+                        o => (o.selectedImpactUpvote = "choix-impact")
+                      );
+                    })
+                    .catch(error => console.log(error));
+                })
+                .catch(error => console.log(error));
+            }
+          },
+          upVoteActionpeusouhaitee: function(id) {
+            var zis = this;
+            var effortToSend = zis.lesactionspeusouhaitees.find(
+              x => x._id === id
+            ).selectedEffortUpvote;
+            var impactToSend = zis.lesactionspeusouhaitees.find(
+              x => x._id === id
+            ).selectedImpactUpvote;
+
+            if (
+              effortToSend == "choix-effort" ||
+              impactToSend == "choix-impact"
+            ) {
+              zis.errorUpvoteActionpeusouhaitee.push(id);
+
+              setTimeout(function() {
+                zis.errorUpvoteActionpeusouhaitee.pop();
+              }, 3000);
+            } else {
+              let effortToSendValue = 0;
+              let impactToSendValue = 0;
+              effortToSend == "Modéré"
+                ? (effortToSendValue = 2)
+                : (effortToSendValue = 8);
+              impactToSend == "Modéré"
+                ? (impactToSendValue = 2)
+                : (impactToSendValue = 8);
+
+              axios
+                .put("/actionpeusouhaitee/" + id + "/upvote/", {
+                  impact: impactToSendValue,
+                  effort: effortToSendValue
+                })
+                .then(function(response) {
+                  zis.showActpeusouhVote = true;
+                  zis.selected.push(response.data);
+                  setTimeout(function() {
+                    zis.showActpeusouhVote = false;
+                  }, 1000);
+
+                  axios
+                    .get("/actionpeusouhaitee/")
+                    .then(function(response) {
+                      zis.lesactionspeusouhaitees = response.data;
+                      zis.lesactionspeusouhaitees.map(
+                        o => (o.selectedEffortUpvote = "choix-effort")
+                      );
+                      zis.lesactionspeusouhaitees.map(
+                        o => (o.selectedImpactUpvote = "choix-impact")
+                      );
+                    })
+                    .catch(error => console.log(error));
+                })
+                .catch(error => console.log(error));
+            }
+          },
+          sumVotesOnQuestion: function(gettedObject, votesKey) {
+            return gettedObject.reduce(function(a, b) {
+              return a + b[votesKey];
+            }, 0);
+          },
+          removeElement: function(elementId) {
+            var element = document.getElementById(elementId);
+            element.parentNode.removeChild(element);
+          },
+          addElement: function(parentId, elementTag, elementId, html) {
+            var p = document.getElementById(parentId);
+            var newElement = document.createElement(elementTag);
+            newElement.setAttribute("id", elementId);
+            newElement.innerHTML = html;
+            p.appendChild(newElement);
+          },
+          createFinalite: function() {
+            var zis = this;
+            if (zis.newFinalite.length < 10 || zis.newFinalite.length > 100) {
+              zis.errorFinalite = true;
+              setTimeout(function() {
+                zis.errorFinalite = false;
+              }, 3000);
+            } else {
+              axios
+                .post("/finalite/create", {
+                  name: this.newFinalite
+                })
+                .then(function(response) {
+                  zis.selected.push(response.data);
+                  zis.newFinalite = "";
+                  axios
+                    .get("/finalite/")
+                    .then(function(response) {
+                      zis.lesfinalites = response.data;
+                    })
+                    .catch(error => console.log(error));
+                })
+                .catch(function(error) {
+                  console.log(error);
+                });
+            }
+          },
+          createAcquis: function() {
+            var zis = this;
+            if (zis.newAcquis.length < 10 || zis.newAcquis.length > 100) {
+              zis.errorAcquis = true;
+              setTimeout(function() {
+                zis.errorAcquis = false;
+              }, 3000);
+            } else {
+              axios
+                .post("/acquis/create", {
+                  name: this.newAcquis
+                })
+                .then(function(response) {
+                  zis.selected.push(response.data);
+                  zis.newAcquis = "";
+                  axios
+                    .get("/acquis/")
+                    .then(function(response) {
+                      zis.lesacquis = response.data;
+                    })
+                    .catch(error => console.log(error));
+                })
+                .catch(function(error) {
+                  console.log(error);
+                });
+            }
+          },
+          createRevendication: function() {
+            var zis = this;
+            if (
+              zis.newRevendication.length < 10 ||
+              zis.newRevendication.length > 100
+            ) {
+              zis.errorRevendication = true;
+              setTimeout(function() {
+                zis.errorRevendication = false;
+              }, 3000);
+            } else {
+              axios
+                .post("/revendication/create", {
+                  name: this.newRevendication
+                })
+                .then(function(response) {
+                  zis.selected.push(response.data);
+                  zis.newRevendication = "";
+                  axios
+                    .get("/revendication/")
+                    .then(function(response) {
+                      zis.lesrevendications = response.data;
+                    })
+                    .catch(error => console.log(error));
+                })
+                .catch(function(error) {
+                  console.log(error);
+                });
+            }
+          },
+          createDenouement: function() {
+            var zis = this;
+            if (
+              zis.newDenouement.length < 10 ||
+              zis.newDenouement.length > 100
+            ) {
+              zis.errorDenouement = true;
+              setTimeout(function() {
+                zis.errorDenouement = false;
+              }, 3000);
+            } else {
+              axios
+                .post("/denouement/create", {
+                  name: this.newDenouement
+                })
+                .then(function(response) {
+                  zis.selected.push(response.data);
+                  zis.newDenouement = "";
+                  axios
+                    .get("/denouement/")
+                    .then(function(response) {
+                      zis.lesdenouements = response.data;
+                    })
+                    .catch(error => console.log(error));
+                })
+                .catch(function(error) {
+                  console.log(error);
+                });
+            }
+          },
+          createStrategie: function() {
+            var zis = this;
+            if (zis.newStrategie.length < 10 || zis.newStrategie.length > 100) {
+              zis.errorStrategie = true;
+              setTimeout(function() {
+                zis.errorStrategie = false;
+              }, 3000);
+            } else {
+              axios
+                .post("/strategie/create", {
+                  name: this.newStrategie
+                })
+                .then(function(response) {
+                  zis.selected.push(response.data);
+                  zis.newStrategie = "";
+                  axios
+                    .get("/strategie/")
+                    .then(function(response) {
+                      zis.lesstrategies = response.data;
+                    })
+                    .catch(error => console.log(error));
+                })
+                .catch(function(error) {
+                  console.log(error);
+                });
+            }
+          },
+          createJour: function() {
+            var zis = this;
+            if (zis.newJour.length < 10 || zis.newJour.length > 100) {
+              zis.errorJour = true;
+              setTimeout(function() {
+                zis.errorJour = false;
+              }, 3000);
+            } else {
+              axios
+                .post("/jour/create", {
+                  name: this.newJour
+                })
+                .then(function(response) {
+                  zis.selected.push(response.data);
+                  zis.newJour = "";
+                  axios
+                    .get("/jour/")
+                    .then(function(response) {
+                      zis.lesjours = response.data;
+                    })
+                    .catch(error => console.log(error));
+                })
+                .catch(function(error) {
+                  console.log(error);
+                });
+            }
+          },
+          createActionsouhaitee: function() {
+            var zis = this;
+            if (
+              zis.newActionsouhaitee.length < 10 ||
+              zis.newActionsouhaitee.length > 100
+            ) {
+              zis.errorActionsouhaitee = true;
+              setTimeout(function() {
+                zis.errorActionsouhaitee = false;
+              }, 3000);
+            } else if (
+              zis.selectedEffort == "choix-effort" ||
+              zis.selectedImpact == "choix-impact"
+            ) {
+              zis.errorActionsouhaiteeChoix = true;
+              setTimeout(function() {
+                zis.errorActionsouhaiteeChoix = false;
+              }, 3000);
+            } else {
+              let effortToSend = 0;
+              let impactToSend = 0;
+              zis.selectedEffort == "Modéré"
+                ? (effortToSend = 2)
+                : (effortToSend = 8);
+              zis.selectedImpact == "Modéré"
+                ? (impactToSend = 2)
+                : (impactToSend = 8);
+
+              axios
+                .post("/actionsouhaitee/create", {
+                  name: this.newActionsouhaitee,
+                  effort: effortToSend,
+                  impact: impactToSend
+                })
+                .then(function(response) {
+                  zis.selected.push(response.data);
+                  zis.newActionsouhaitee = "";
+                  zis.selectedEffort = "choix-effort";
+                  zis.selectedImpact = "choix-impact";
+                  axios
+                    .get("/actionsouhaitee/")
+                    .then(function(response) {
+                      zis.lesactionssouhaitees = response.data;
+                      zis.lesactionssouhaitees.map(
+                        o => (o.selectedEffortUpvote = "choix-effort")
+                      );
+                      zis.lesactionssouhaitees.map(
+                        o => (o.selectedImpactUpvote = "choix-impact")
+                      );
+                    })
+                    .catch(error => console.log(error));
+                })
+                .catch(function(error) {
+                  console.log(error);
+                });
+            }
+          },
+          createActionpeusouhaitee: function() {
+            var zis = this;
+            if (
+              zis.newActionpeusouhaitee.length < 10 ||
+              zis.newActionpeusouhaitee.length > 100
+            ) {
+              zis.errorActionpeusouhaitee = true;
+              setTimeout(function() {
+                zis.errorActionpeusouhaitee = false;
+              }, 3000);
+            } else if (
+              zis.selectedEffortPeu == "choix-effort" ||
+              zis.selectedImpactPeu == "choix-impact"
+            ) {
+              zis.errorActionpeusouhaiteeChoix = true;
+              setTimeout(function() {
+                zis.errorActionpeusouhaiteeChoix = false;
+              }, 3000);
+            } else {
+              let effortToSend = 0;
+              let impactToSend = 0;
+              zis.selectedEffort == "Modéré"
+                ? (effortToSend = 2)
+                : (effortToSend = 8);
+              zis.selectedImpact == "Modéré"
+                ? (impactToSend = 2)
+                : (impactToSend = 8);
+
+              axios
+                .post("/actionpeusouhaitee/create", {
+                  name: this.newActionpeusouhaitee,
+                  effort: effortToSend,
+                  impact: impactToSend
+                })
+                .then(function(response) {
+                  zis.selected.push(response.data);
+                  zis.newActionpeusouhaitee = "";
+                  zis.selectedEffortPeu = "choix-effort";
+                  zis.selectedImpactPeu = "choix-impact";
+                  axios
+                    .get("/actionpeusouhaitee/")
+                    .then(function(response) {
+                      zis.lesactionspeusouhaitees = response.data;
+                      zis.lesactionspeusouhaitees.map(
+                        o => (o.selectedEffortUpvote = "choix-effort")
+                      );
+                      zis.lesactionspeusouhaitees.map(
+                        o => (o.selectedImpactUpvote = "choix-impact")
+                      );
+                    })
+                    .catch(error => console.log(error));
+                })
+                .catch(function(error) {
+                  console.log(error);
+                });
+            }
+          }
+        },
         mounted() {
+          var zis = this;
+
           axios
-            .get("/finalite/5cb4dcfcbdca3c2b9fd49bf6")
-            // .then(function(response) {
-            //   console.log(response);
-            // });
-            .then(response => (this.message = response.data.name));
+            .get("/finalite/")
+            .then(response => {
+              this.lesfinalites = response.data;
+              this.finaliteCont = this.sumVotesOnQuestion(
+                this.lesfinalites,
+                "votes"
+              );
+            })
+            .catch(error => console.log(error));
+          axios
+            .get("/acquis/")
+            .then(response => {
+              this.lesacquis = response.data;
+              this.acquisCont = this.sumVotesOnQuestion(
+                this.lesacquis,
+                "votes"
+              );
+            })
+            .catch(error => console.log(error));
+          axios
+            .get("/revendication/")
+            .then(response => {
+              this.lesrevendications = response.data;
+              this.revendicationCont = this.sumVotesOnQuestion(
+                this.lesrevendications,
+                "votes"
+              );
+            })
+            .catch(error => console.log(error));
+          axios
+            .get("/denouement/")
+            .then(response => {
+              this.lesdenouements = response.data;
+              this.denouementCont = this.sumVotesOnQuestion(
+                this.lesdenouements,
+                "votes"
+              );
+            })
+            .catch(error => console.log(error));
+          axios
+            .get("/strategie/")
+            .then(response => {
+              this.lesstrategies = response.data;
+              this.strategieCont = this.sumVotesOnQuestion(
+                this.lesstrategies,
+                "votes"
+              );
+            })
+            .catch(error => console.log(error));
+          axios
+            .get("/jour/")
+            .then(response => {
+              this.lesjours = response.data;
+              this.jourCont = this.sumVotesOnQuestion(this.lesjours, "votes");
+            })
+            .catch(error => console.log(error));
+          axios
+            .get("/actionsouhaitee/")
+            .then(function(response) {
+              zis.lesactionssouhaitees = response.data;
+              zis.actionsouhaiteeCont = zis.sumVotesOnQuestion(
+                zis.lesactionssouhaitees,
+                "votes"
+              );
+              zis.lesactionssouhaitees.map(
+                o => (o.selectedEffortUpvote = "choix-effort")
+              );
+              zis.lesactionssouhaitees.map(
+                o => (o.selectedImpactUpvote = "choix-impact")
+              );
+            })
+            .catch(error => console.log(error));
+          axios
+            .get("/actionpeusouhaitee/")
+            .then(function(response) {
+              zis.lesactionspeusouhaitees = response.data;
+              zis.actionpeusouhaiteeCont = zis.sumVotesOnQuestion(
+                zis.lesactionspeusouhaitees,
+                "votes"
+              );
+              zis.lesactionspeusouhaitees.map(
+                o => (o.selectedEffortUpvote = "choix-effort")
+              );
+              zis.lesactionspeusouhaitees.map(
+                o => (o.selectedImpactUpvote = "choix-impact")
+              );
+            })
+            .catch(error => console.log(error));
+        },
+        watch: {
+          lesfinalites: function(jsondata) {
+            this.removeElement("chartContainerFinalite");
+            this.addElement(
+              "chart-finalite",
+              "div",
+              "chartContainerFinalite",
+              ""
+            );
+
+            var elementToAnimate = document.getElementById("chart-finalite");
+            elementToAnimate.classList.remove("animated", "pulse");
+            elementToAnimate.className += " animated pulse";
+
+            var widthOfChart = document.getElementById("chart-finalite")
+              .offsetWidth;
+            var svg = dimple.newSvg(
+              "#chartContainerFinalite",
+              widthOfChart,
+              400
+            );
+            d3.json(hostname + "/finalite/", function(data) {
+              var myChart = new dimple.chart(svg, data);
+              myChart.setBounds(0, 0, widthOfChart, 360);
+              var p = myChart.addMeasureAxis("p", "votes");
+              p.showPercent = true;
+              var ring = myChart.addSeries("name", dimple.plot.pie);
+              ring.getTooltipText = function(e) {
+                return [
+                  e.aggField[0],
+                  "Soutien " + Math.round(e.p * 100) + "%"
+                ];
+              };
+              ring.innerRadius = "50%";
+              myChart.addLegend(widthOfChart - 80, 20, 90, 300, "left");
+              myChart.draw();
+            });
+          },
+          lesacquis: function(jsondata) {
+            this.removeElement("chartContainerAcquis");
+            this.addElement("chart-acquis", "div", "chartContainerAcquis", "");
+
+            var elementToAnimate = document.getElementById("chart-acquis");
+            elementToAnimate.classList.remove("animated", "pulse");
+            elementToAnimate.className += " animated pulse";
+
+            var widthOfChart = document.getElementById("chart-acquis")
+              .offsetWidth;
+            var svg = dimple.newSvg("#chartContainerAcquis", widthOfChart, 400);
+            d3.json(hostname + "/acquis/", function(data) {
+              var myChart = new dimple.chart(svg, data);
+              myChart.setBounds(0, 0, widthOfChart, 360);
+              var p = myChart.addMeasureAxis("p", "votes");
+              p.showPercent = true;
+              var ring = myChart.addSeries("name", dimple.plot.pie);
+              ring.getTooltipText = function(e) {
+                return [
+                  e.aggField[0],
+                  "Soutien " + Math.round(e.p * 100) + "%"
+                ];
+              };
+              ring.innerRadius = "50%";
+              myChart.addLegend(widthOfChart - 80, 20, 90, 300, "left");
+              myChart.draw();
+            });
+          },
+          lesrevendications: function(jsondata) {
+            var totalVotes = this.sumVotesOnQuestion(
+              this.lesrevendications,
+              "votes"
+            );
+            this.removeElement("chartContainerRevendication");
+            this.addElement(
+              "chart-revendication",
+              "div",
+              "chartContainerRevendication",
+              ""
+            );
+
+            var elementToAnimate = document.getElementById(
+              "chart-revendication"
+            );
+            elementToAnimate.classList.remove("animated", "pulse");
+            elementToAnimate.className += " animated pulse";
+
+            var widthOfChart = document.getElementById("chart-revendication")
+              .offsetWidth;
+            var svg = dimple.newSvg(
+              "#chartContainerRevendication",
+              widthOfChart,
+              400
+            );
+            d3.json(hostname + "/revendication/", function(data) {
+              var myChart = new dimple.chart(svg, data);
+              myChart.setBounds(0, 0, widthOfChart, 360);
+              var xAxis = myChart.addMeasureAxis("x", "votes");
+              xAxis.hidden = true;
+              var y = myChart.addCategoryAxis("y", "votes");
+              var bars = myChart.addSeries("name", dimple.plot.bar);
+              bars.getTooltipText = function(e) {
+                return [
+                  e.aggField[0],
+                  "Soutien " + Math.round((e.cy / totalVotes) * 100) + "%"
+                ];
+              };
+              myChart.addLegend(
+                myChart._xPixels(),
+                370,
+                myChart._widthPixels(),
+                20,
+                "left"
+              );
+              myChart.draw();
+            });
+          },
+          lesdenouements: function(jsondata) {
+            var totalVotes = this.sumVotesOnQuestion(
+              this.lesdenouements,
+              "votes"
+            );
+            this.removeElement("chartContainerDenouement");
+            this.addElement(
+              "chart-denouement",
+              "div",
+              "chartContainerDenouement",
+              ""
+            );
+
+            var elementToAnimate = document.getElementById("chart-denouement");
+            elementToAnimate.classList.remove("animated", "pulse");
+            elementToAnimate.className += " animated pulse";
+
+            var widthOfChart = document.getElementById("chart-denouement")
+              .offsetWidth;
+            var svg = dimple.newSvg(
+              "#chartContainerDenouement",
+              widthOfChart,
+              400
+            );
+            d3.json(hostname + "/denouement/", function(data) {
+              var myChart = new dimple.chart(svg, data);
+              myChart.setBounds(0, 0, widthOfChart, 360);
+              var xAxis = myChart.addMeasureAxis("x", "votes");
+              xAxis.hidden = true;
+              var y = myChart.addCategoryAxis("y", "votes");
+              var bars = myChart.addSeries("name", dimple.plot.bar);
+              bars.getTooltipText = function(e) {
+                return [
+                  e.aggField[0],
+                  "Soutien " + Math.round((e.cy / totalVotes) * 100) + "%"
+                ];
+              };
+              myChart.addLegend(
+                myChart._xPixels(),
+                370,
+                myChart._widthPixels(),
+                20,
+                "left"
+              );
+              myChart.draw();
+            });
+          },
+          lesstrategies: function(jsondata) {
+            this.removeElement("chartContainerStrategie");
+            this.addElement(
+              "chart-strategie",
+              "div",
+              "chartContainerStrategie",
+              ""
+            );
+
+            var elementToAnimate = document.getElementById("chart-strategie");
+            elementToAnimate.classList.remove("animated", "pulse");
+            elementToAnimate.className += " animated pulse";
+
+            var widthOfChart = document.getElementById("chart-strategie")
+              .offsetWidth;
+            var svg = dimple.newSvg(
+              "#chartContainerStrategie",
+              widthOfChart,
+              400
+            );
+            d3.json(hostname + "/strategie/", function(data) {
+              var myChart = new dimple.chart(svg, data);
+              myChart.setBounds(0, 0, widthOfChart, 360);
+              var p = myChart.addMeasureAxis("p", "votes");
+              p.showPercent = true;
+              var ring = myChart.addSeries("name", dimple.plot.pie);
+              ring.getTooltipText = function(e) {
+                return [
+                  e.aggField[0],
+                  "Soutien " + Math.round(e.p * 100) + "%"
+                ];
+              };
+              ring.innerRadius = "0";
+              myChart.addLegend(widthOfChart - 80, 20, 90, 300, "left");
+
+              myChart.draw();
+            });
+          },
+          lesjours: function(jsondata) {
+            this.removeElement("chartContainerJour");
+            this.addElement("chart-jour", "div", "chartContainerJour", "");
+
+            var elementToAnimate = document.getElementById("chart-jour");
+            elementToAnimate.classList.remove("animated", "pulse");
+            elementToAnimate.className += " animated pulse";
+
+            var widthOfChart = document.getElementById("chart-jour")
+              .offsetWidth;
+            var svg = dimple.newSvg("#chartContainerJour", widthOfChart, 400);
+            d3.json(hostname + "/jour/", function(data) {
+              var myChart = new dimple.chart(svg, data);
+              myChart.setBounds(0, 0, widthOfChart, 360);
+              var p = myChart.addMeasureAxis("p", "votes");
+              p.showPercent = true;
+              var ring = myChart.addSeries("name", dimple.plot.pie);
+              ring.getTooltipText = function(e) {
+                return [
+                  e.aggField[0],
+                  "Soutien " + Math.round(e.p * 100) + "%"
+                ];
+              };
+              ring.innerRadius = "0";
+              myChart.addLegend(widthOfChart - 80, 20, 90, 300, "left");
+
+              myChart.draw();
+            });
+          },
+          lesactionssouhaitees: function(jsondata) {
+            this.removeElement("chartContainerActionsouhaitee");
+            this.addElement(
+              "chart-actionsouhaitee",
+              "div",
+              "chartContainerActionsouhaitee",
+              ""
+            );
+
+            var totalVotes = this.sumVotesOnQuestion(
+              this.lesactionssouhaitees,
+              "votes"
+            );
+
+            var elementToAnimate = document.getElementById(
+              "chart-actionsouhaitee"
+            );
+            elementToAnimate.classList.remove("animated", "pulse");
+            elementToAnimate.className += " animated pulse";
+
+            var widthOfChart = document.getElementById("chart-actionsouhaitee")
+              .offsetWidth;
+            var svg = dimple.newSvg(
+              "#chartContainerActionsouhaitee",
+              widthOfChart,
+              400
+            );
+            d3.json(hostname + "/actionsouhaitee/", function(data) {
+              var myChart = new dimple.chart(svg, data);
+              myChart.setBounds(0, 0, widthOfChart, 330);
+              myChart.addMeasureAxis("x", "effort");
+              myChart.addMeasureAxis("y", "impact");
+              myChart.addMeasureAxis("z", "votes");
+              var serie = myChart.addSeries(["name"], dimple.plot.bubble);
+              serie.getTooltipText = function(e) {
+                return [
+                  e.aggField[0],
+                  "Impact " +
+                    (e.cy > 4 ? "favorable" : "modéré") +
+                    " , effort " +
+                    (e.cx > 4 ? "important" : "modéré"),
+                  "Soutien " + Math.round((e.cz / totalVotes) * 100) + "%"
+                ];
+              };
+              myChart.addLegend(
+                myChart._xPixels(),
+                370,
+                myChart._widthPixels(),
+                20,
+                "left"
+              );
+
+              myChart.draw();
+
+              svg
+                .append("line")
+                .attr("x1", myChart._xPixels())
+                .attr("x2", myChart._xPixels() + myChart._widthPixels())
+                .attr("y1", myChart._yPixels() + myChart._heightPixels() / 2)
+                .attr("y2", myChart._yPixels() + myChart._heightPixels() / 2)
+                .style("stroke", "red");
+
+              svg
+                .append("line")
+                .attr("y1", myChart._yPixels())
+                .attr("y2", myChart._yPixels() + myChart._heightPixels())
+                .attr("x1", myChart._widthPixels() / 2 + myChart._xPixels())
+                .attr("x2", myChart._xPixels() + myChart._widthPixels() / 2)
+                .style("stroke", "green");
+
+              d3.selection.prototype.moveToBack = function() {
+                return this.each(function() {
+                  var firstChild = this.parentNode.firstChild;
+                  if (firstChild) {
+                    this.parentNode.insertBefore(this, firstChild);
+                  }
+                });
+              };
+
+              svg
+                .append("rect")
+                .attr("class", "background-rect")
+                .attr("x", myChart._xPixels())
+                .attr("y", myChart._yPixels())
+                .attr("width", myChart._widthPixels() / 2)
+                .attr("height", myChart._heightPixels() / 2)
+                .style("fill", "green")
+                .moveToBack();
+
+              svg
+                .append("rect")
+                .attr("class", "background-rect")
+                .attr("x", myChart._xPixels() + myChart._widthPixels() / 2)
+                .attr("y", myChart._yPixels() + myChart._heightPixels() / 2)
+                .attr("width", myChart._widthPixels() / 2)
+                .attr("height", myChart._heightPixels() / 2)
+                .style("fill", "red")
+                .moveToBack();
+
+              svg
+                .append("rect")
+                .attr("class", "background-rect")
+                .attr("x", myChart._xPixels())
+                .attr("y", myChart._yPixels() + myChart._heightPixels() / 2)
+                .attr("width", myChart._widthPixels() / 2)
+                .attr("height", myChart._heightPixels() / 2)
+                .style("fill", "grey")
+                .moveToBack();
+
+              svg
+                .append("rect")
+                .attr("class", "background-rect")
+                .attr("x", myChart._xPixels() + myChart._widthPixels() / 2)
+                .attr("y", myChart._yPixels())
+                .attr("width", myChart._widthPixels() / 2)
+                .attr("height", myChart._heightPixels() / 2)
+                .style("fill", "grey")
+                .moveToBack();
+            });
+          },
+          lesactionspeusouhaitees: function(jsondata) {
+            this.removeElement("chartContainerActionpeusouhaitee");
+            this.addElement(
+              "chart-actionpeusouhaitee",
+              "div",
+              "chartContainerActionpeusouhaitee",
+              ""
+            );
+
+            var totalVotes = this.sumVotesOnQuestion(
+              this.lesactionspeusouhaitees,
+              "votes"
+            );
+
+            var elementToAnimate = document.getElementById(
+              "chart-actionpeusouhaitee"
+            );
+            elementToAnimate.classList.remove("animated", "pulse");
+            elementToAnimate.className += " animated pulse";
+
+            var widthOfChart = document.getElementById(
+              "chart-actionpeusouhaitee"
+            ).offsetWidth;
+            var svg = dimple.newSvg(
+              "#chartContainerActionpeusouhaitee",
+              widthOfChart,
+              400
+            );
+            d3.json(hostname + "/actionpeusouhaitee/", function(data) {
+              var myChart = new dimple.chart(svg, data);
+              myChart.setBounds(0, 0, widthOfChart, 330);
+              myChart.addMeasureAxis("x", "effort");
+              myChart.addMeasureAxis("y", "impact");
+              myChart.addMeasureAxis("z", "votes");
+              var serie = myChart.addSeries(["name"], dimple.plot.bubble);
+              serie.getTooltipText = function(e) {
+                return [
+                  e.aggField[0],
+                  "Impact " +
+                    (e.cy > 4 ? "défavorable" : "modéré") +
+                    " , effort " +
+                    (e.cx > 4 ? "important" : "modéré"),
+                  "Opposition " + Math.round((e.cz / totalVotes) * 100) + "%"
+                ];
+              };
+              myChart.addLegend(
+                myChart._xPixels(),
+                370,
+                myChart._widthPixels(),
+                20,
+                "left"
+              );
+
+              myChart.draw();
+
+              svg
+                .append("line")
+                .attr("x1", myChart._xPixels())
+                .attr("x2", myChart._xPixels() + myChart._widthPixels())
+                .attr("y1", myChart._yPixels() + myChart._heightPixels() / 2)
+                .attr("y2", myChart._yPixels() + myChart._heightPixels() / 2)
+                .style("stroke", "red");
+
+              svg
+                .append("line")
+                .attr("y1", myChart._yPixels())
+                .attr("y2", myChart._yPixels() + myChart._heightPixels())
+                .attr("x1", myChart._widthPixels() / 2 + myChart._xPixels())
+                .attr("x2", myChart._xPixels() + myChart._widthPixels() / 2)
+                .style("stroke", "green");
+
+              d3.selection.prototype.moveToBack = function() {
+                return this.each(function() {
+                  var firstChild = this.parentNode.firstChild;
+                  if (firstChild) {
+                    this.parentNode.insertBefore(this, firstChild);
+                  }
+                });
+              };
+
+              svg
+                .append("rect")
+                .attr("class", "background-rect")
+                .attr("x", myChart._xPixels())
+                .attr("y", myChart._yPixels())
+                .attr("width", myChart._widthPixels() / 2)
+                .attr("height", myChart._heightPixels() / 2)
+                .style("fill", "red")
+                .moveToBack();
+
+              svg
+                .append("rect")
+                .attr("class", "background-rect")
+                .attr("x", myChart._xPixels() + myChart._widthPixels() / 2)
+                .attr("y", myChart._yPixels() + myChart._heightPixels() / 2)
+                .attr("width", myChart._widthPixels() / 2)
+                .attr("height", myChart._heightPixels() / 2)
+                .style("fill", "green")
+                .moveToBack();
+
+              svg
+                .append("rect")
+                .attr("class", "background-rect")
+                .attr("x", myChart._xPixels())
+                .attr("y", myChart._yPixels() + myChart._heightPixels() / 2)
+                .attr("width", myChart._widthPixels() / 2)
+                .attr("height", myChart._heightPixels() / 2)
+                .style("fill", "grey")
+                .moveToBack();
+
+              svg
+                .append("rect")
+                .attr("class", "background-rect")
+                .attr("x", myChart._xPixels() + myChart._widthPixels() / 2)
+                .attr("y", myChart._yPixels())
+                .attr("width", myChart._widthPixels() / 2)
+                .attr("height", myChart._heightPixels() / 2)
+                .style("fill", "grey")
+                .moveToBack();
+            });
+          }
         }
       });
     </script>
+
+    <script type="text/javascript"></script>
   </body>
 </html>
