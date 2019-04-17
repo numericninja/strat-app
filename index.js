@@ -11,6 +11,11 @@ const denouement = require("./routes/denouement.route");
 const jour = require("./routes/jour.route");
 
 const app = express();
+const path = require("path");
+
+app.get("/", function(req, res) {
+  res.sendFile(path.join(__dirname + "/views/index.html"));
+});
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

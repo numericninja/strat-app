@@ -32,6 +32,7 @@
     "express": "^4.16.4",
     "mongoose": "^5.5.1",
     "mongoose-unique-validator": "^2.0.2",
+    "path": "^0.12.7",
     "vue": "^2.6.10",
     "vue-axios": "^2.1.4"
   },
