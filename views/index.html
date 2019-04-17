@@ -1728,12 +1728,12 @@
                   "Soutien " + Math.round((e.cz / totalVotes) * 100) + "%"
                 ];
               };
-              myChart.addLegend(
-                myChart._xPixels(),
-                370,
-                myChart._widthPixels(),
-                20,
-                "left"
+              // myChart.addLegend(
+              //   myChart._xPixels(),
+              //   370,
+              //   myChart._widthPixels(),
+              //   20,
+              //   "left"
               );
 
               myChart.draw();
@@ -1752,7 +1752,7 @@
                 .attr("y2", myChart._yPixels() + myChart._heightPixels())
                 .attr("x1", myChart._widthPixels() / 2 + myChart._xPixels())
                 .attr("x2", myChart._xPixels() + myChart._widthPixels() / 2)
-                .style("stroke", "green");
+                .style("stroke", "yellow");
 
               d3.selection.prototype.moveToBack = function() {
                 return this.each(function() {
@@ -1849,12 +1849,12 @@
                   "Opposition " + Math.round((e.cz / totalVotes) * 100) + "%"
                 ];
               };
-              myChart.addLegend(
-                myChart._xPixels(),
-                370,
-                myChart._widthPixels(),
-                20,
-                "left"
+              // myChart.addLegend(
+              //   myChart._xPixels(),
+              //   370,
+              //   myChart._widthPixels(),
+              //   20,
+              //   "left"
               );
 
               myChart.draw();
@@ -1865,7 +1865,7 @@
                 .attr("x2", myChart._xPixels() + myChart._widthPixels())
                 .attr("y1", myChart._yPixels() + myChart._heightPixels() / 2)
                 .attr("y2", myChart._yPixels() + myChart._heightPixels() / 2)
-                .style("stroke", "red");
+                .style("stroke", "yellow");
 
               svg
                 .append("line")
@@ -1873,7 +1873,7 @@
                 .attr("y2", myChart._yPixels() + myChart._heightPixels())
                 .attr("x1", myChart._widthPixels() / 2 + myChart._xPixels())
                 .attr("x2", myChart._xPixels() + myChart._widthPixels() / 2)
-                .style("stroke", "green");
+                .style("stroke", "red");
 
               d3.selection.prototype.moveToBack = function() {
                 return this.each(function() {

@@ -90,8 +90,10 @@ circle {
 .domain.dimple-custom-axis-line {
   stroke: rgba(0, 0, 0, 0.2) !important;
 }
-#chartContainerActionpeusouhaitee .dimple-axis-group,
-#chartContainerActionsouhaitee .dimple-axis-group {
+#chartContainerActionpeusouhaitee .dimple-axis-x,
+#chartContainerActionpeusouhaitee .dimple-axis-y,
+#chartContainerActionsouhaitee .dimple-axis-x,
+#chartContainerActionsouhaitee .dimple-axis-y {
   display: none;
 }
 
