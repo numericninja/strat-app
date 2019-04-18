@@ -1744,21 +1744,7 @@
 
               myChart.draw();
 
-              svg
-                .append("line")
-                .attr("x1", myChart._xPixels())
-                .attr("x2", myChart._xPixels() + myChart._widthPixels())
-                .attr("y1", myChart._yPixels() + myChart._heightPixels() / 2)
-                .attr("y2", myChart._yPixels() + myChart._heightPixels() / 2)
-                .style("stroke", "red");
 
-              svg
-                .append("line")
-                .attr("y1", myChart._yPixels())
-                .attr("y2", myChart._yPixels() + myChart._heightPixels())
-                .attr("x1", myChart._widthPixels() / 2 + myChart._xPixels())
-                .attr("x2", myChart._xPixels() + myChart._widthPixels() / 2)
-                .style("stroke", "yellow");
 
               d3.selection.prototype.moveToBack = function() {
                 return this.each(function() {
@@ -1768,6 +1754,24 @@
                   }
                 });
               };
+
+              svg
+                .append("line")
+                .attr("x1", myChart._xPixels())
+                .attr("x2", myChart._xPixels() + myChart._widthPixels())
+                .attr("y1", myChart._yPixels() + myChart._heightPixels() / 2)
+                .attr("y2", myChart._yPixels() + myChart._heightPixels() / 2)
+                .style("stroke", "red")
+                .moveToBack();
+
+              svg
+                .append("line")
+                .attr("y1", myChart._yPixels())
+                .attr("y2", myChart._yPixels() + myChart._heightPixels())
+                .attr("x1", myChart._widthPixels() / 2 + myChart._xPixels())
+                .attr("x2", myChart._xPixels() + myChart._widthPixels() / 2)
+                .style("stroke", "yellow")
+                .moveToBack();
 
               svg
                 .append("rect")
@@ -1865,21 +1869,7 @@
 
               myChart.draw();
 
-              svg
-                .append("line")
-                .attr("x1", myChart._xPixels())
-                .attr("x2", myChart._xPixels() + myChart._widthPixels())
-                .attr("y1", myChart._yPixels() + myChart._heightPixels() / 2)
-                .attr("y2", myChart._yPixels() + myChart._heightPixels() / 2)
-                .style("stroke", "yellow");
 
-              svg
-                .append("line")
-                .attr("y1", myChart._yPixels())
-                .attr("y2", myChart._yPixels() + myChart._heightPixels())
-                .attr("x1", myChart._widthPixels() / 2 + myChart._xPixels())
-                .attr("x2", myChart._xPixels() + myChart._widthPixels() / 2)
-                .style("stroke", "red");
 
               d3.selection.prototype.moveToBack = function() {
                 return this.each(function() {
@@ -1889,6 +1879,24 @@
                   }
                 });
               };
+
+              svg
+                .append("line")
+                .attr("x1", myChart._xPixels())
+                .attr("x2", myChart._xPixels() + myChart._widthPixels())
+                .attr("y1", myChart._yPixels() + myChart._heightPixels() / 2)
+                .attr("y2", myChart._yPixels() + myChart._heightPixels() / 2)
+                .style("stroke", "yellow")
+                .moveToBack();
+
+              svg
+                .append("line")
+                .attr("y1", myChart._yPixels())
+                .attr("y2", myChart._yPixels() + myChart._heightPixels())
+                .attr("x1", myChart._widthPixels() / 2 + myChart._xPixels())
+                .attr("x2", myChart._xPixels() + myChart._widthPixels() / 2)
+                .style("stroke", "red")
+                .moveToBack();
 
               svg
                 .append("rect")
