@@ -98,6 +98,12 @@
                         Entre 10 et 100 caractères.
                       </p>
                     </transition>
+                    <transition name="fade">
+                      <p v-if="newFinalite.length>90" class="help is-info">
+                        100 caractères max. Il vous reste
+                        {{ 100 - newFinalite.length }}.
+                      </p>
+                    </transition>
                     <div class="field has-addons">
                       <input
                         class="input"
@@ -153,6 +159,12 @@
                     <transition name="fade">
                       <p v-if="errorRevendication" class="help is-danger">
                         Entre 10 et 100 caractères.
+                      </p>
+                    </transition>
+                    <transition name="fade">
+                      <p v-if="newRevendication.length>90" class="help is-info">
+                        100 caractères max. Il vous reste
+                        {{ 100 - newRevendication.length }}.
                       </p>
                     </transition>
                     <div class="field has-addons">
@@ -214,6 +226,12 @@
                     <transition name="fade">
                       <p v-if="errorStrategie" class="help is-danger">
                         Entre 10 et 100 caractères.
+                      </p>
+                    </transition>
+                    <transition name="fade">
+                      <p v-if="newStrategie.length>90" class="help is-info">
+                        100 caractères max. Il vous reste
+                        {{ 100 - newStrategie.length }}.
                       </p>
                     </transition>
                     <div class="field has-addons">
@@ -347,6 +365,12 @@
                             class="help is-danger"
                           >
                             Choisir un 'effort' et un 'impact'.
+                          </p>
+                        </transition>
+                        <transition name="fade">
+                          <p v-if="newActionsouhaitee.length>90" class="help is-info">
+                            100 caractères max. Il vous reste
+                            {{ 100 - newActionsouhaitee.length }}.
                           </p>
                         </transition>
                         <div class="field ">
@@ -516,6 +540,12 @@
                             Choisir un 'effort' et un 'impact'.
                           </p>
                         </transition>
+                        <transition name="fade">
+                          <p v-if="newActionpeusouhaitee.length>90" class="help is-info">
+                            100 caractères max. Il vous reste
+                            {{ 100 - newActionpeusouhaitee.length }}.
+                          </p>
+                        </transition>
                         <div class="field ">
                           <input
                             class="input"
@@ -615,6 +645,12 @@
                         Entre 10 et 100 caractères.
                       </p>
                     </transition>
+                    <transition name="fade">
+                      <p v-if="newAcquis.length>90" class="help is-info">
+                        100 caractères max. Il vous reste
+                        {{ 100 - newAcquis.length }}.
+                      </p>
+                    </transition>
                     <div class="field has-addons">
                       <input
                         class="input"
@@ -672,6 +708,12 @@
                         Entre 10 et 100 caractères.
                       </p>
                     </transition>
+                    <transition name="fade">
+                      <p v-if="newDenouement.length>90" class="help is-info">
+                        100 caractères max. Il vous reste
+                        {{ 100 - newDenouement.length }}.
+                      </p>
+                    </transition>
                     <div class="field has-addons">
                       <input
                         class="input"
@@ -727,6 +769,12 @@
                     <transition name="fade">
                       <p v-if="errorJour" class="help is-danger">
                         Entre 10 et 100 caractères.
+                      </p>
+                    </transition>
+                    <transition name="fade">
+                      <p v-if="newJour.length>90" class="help is-info">
+                        100 caractères max. Il vous reste
+                        {{ 100 - newJour.length }}.
                       </p>
                     </transition>
                     <div class="field has-addons">
@@ -1744,8 +1792,6 @@
 
               myChart.draw();
 
-
-
               d3.selection.prototype.moveToBack = function() {
                 return this.each(function() {
                   var firstChild = this.parentNode.firstChild;
@@ -1868,8 +1914,6 @@
               // );
 
               myChart.draw();
-
-
 
               d3.selection.prototype.moveToBack = function() {
                 return this.each(function() {
