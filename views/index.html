@@ -368,7 +368,10 @@
                           </p>
                         </transition>
                         <transition name="fade">
-                          <p v-if="newActionsouhaitee.length>90" class="help is-info">
+                          <p
+                            v-if="newActionsouhaitee.length>90"
+                            class="help is-info"
+                          >
                             100 caractères max. Il vous reste
                             {{ 100 - newActionsouhaitee.length }}.
                           </p>
@@ -541,7 +544,10 @@
                           </p>
                         </transition>
                         <transition name="fade">
-                          <p v-if="newActionpeusouhaitee.length>90" class="help is-info">
+                          <p
+                            v-if="newActionpeusouhaitee.length>90"
+                            class="help is-info"
+                          >
                             100 caractères max. Il vous reste
                             {{ 100 - newActionpeusouhaitee.length }}.
                           </p>
@@ -1614,13 +1620,7 @@
                   "Soutien " + Math.round((e.cy / totalVotes) * 100) + "%"
                 ];
               };
-              myChart.addLegend(
-                myChart._xPixels(),
-                370,
-                myChart._widthPixels(),
-                20,
-                "left"
-              );
+              myChart.addLegend(widthOfChart - 100, 60, 100, 300, "left");
               myChart.draw();
             });
           },
@@ -1661,13 +1661,7 @@
                   "Soutien " + Math.round((e.cy / totalVotes) * 100) + "%"
                 ];
               };
-              myChart.addLegend(
-                myChart._xPixels(),
-                370,
-                myChart._widthPixels(),
-                20,
-                "left"
-              );
+              myChart.addLegend(widthOfChart - 100, 60, 100, 300, "left");
               myChart.draw();
             });
           },
@@ -1767,30 +1761,53 @@
             );
             d3.json(hostname + "/actionsouhaitee/", function(data) {
               var myChart = new dimple.chart(svg, data);
-              myChart.setBounds(30, 30, widthOfChart - 60, 330);
-              myChart.addMeasureAxis("x", "effort");
-              myChart.addMeasureAxis("y", "impact");
+              myChart.setBounds(40, 30, widthOfChart - 60, 330);
+              x = myChart.addMeasureAxis("x", "effort");
+              y = myChart.addMeasureAxis("y", "impact");
+              var lowestX = Number.POSITIVE_INFINITY;
+              var highestX = Number.NEGATIVE_INFINITY;
+              var tmp;
+              for (var i = data.length - 1; i >= 0; i--) {
+                tmp = data[i].effort;
+                if (tmp < lowestX) lowestX = tmp;
+                if (tmp > highestX) highestX = tmp;
+              }
+              x.overrideMin = lowestX;
+              var lowestY = Number.POSITIVE_INFINITY;
+              var highestY = Number.NEGATIVE_INFINITY;
+
+              var tmp;
+              for (var i = data.length - 1; i >= 0; i--) {
+                tmp = data[i].impact;
+                if (tmp < lowestY) lowestY = tmp;
+                if (tmp > highestY) highestY = tmp;
+              }
+              y.overrideMin = lowestY;
               myChart.addMeasureAxis("z", "votes");
               var serie = myChart.addSeries(["name"], dimple.plot.bubble);
               serie.getTooltipText = function(e) {
                 return [
                   e.aggField[0],
                   "Impact " +
-                    (e.cy > 4 ? "favorable" : "modéré") +
+                    (e.cy > lowestY + (highestY - lowestY) / 2
+                      ? "favorable"
+                      : "modéré") +
                     " , effort " +
-                    (e.cx > 4 ? "important" : "modéré"),
+                    (e.cx > lowestX + (highestX - lowestX) / 2
+                      ? "important"
+                      : "modéré"),
                   "Soutien " + Math.round((e.cz / totalVotes) * 100) + "%"
                 ];
               };
-              // myChart.addLegend(
-              //   myChart._xPixels(),
-              //   370,
-              //   myChart._widthPixels(),
-              //   20,
-              //   "left"
-              // );
 
               myChart.draw();
+
+              if (x.overrideMin > 0) {
+                x._origin = myChart._xPixels();
+              }
+              if (y.overrideMin > 0) {
+                y._origin = myChart._yPixels() + myChart._heightPixels();
+              }
 
               d3.selection.prototype.moveToBack = function() {
                 return this.each(function() {
@@ -1890,30 +1907,53 @@
             );
             d3.json(hostname + "/actionpeusouhaitee/", function(data) {
               var myChart = new dimple.chart(svg, data);
-              myChart.setBounds(30, 30, widthOfChart - 60, 330);
-              myChart.addMeasureAxis("x", "effort");
-              myChart.addMeasureAxis("y", "impact");
+              myChart.setBounds(40, 30, widthOfChart - 60, 330);
+              x = myChart.addMeasureAxis("x", "effort");
+              y = myChart.addMeasureAxis("y", "impact");
+              var lowestX = Number.POSITIVE_INFINITY;
+              var highestX = Number.NEGATIVE_INFINITY;
+              var tmp;
+              for (var i = data.length - 1; i >= 0; i--) {
+                tmp = data[i].effort;
+                if (tmp < lowestX) lowestX = tmp;
+                if (tmp > highestX) highestX = tmp;
+              }
+              x.overrideMin = lowestX;
+              var lowestY = Number.POSITIVE_INFINITY;
+              var highestY = Number.NEGATIVE_INFINITY;
+
+              var tmp;
+              for (var i = data.length - 1; i >= 0; i--) {
+                tmp = data[i].impact;
+                if (tmp < lowestY) lowestY = tmp;
+                if (tmp > highestY) highestY = tmp;
+              }
+              y.overrideMin = lowestY;
               myChart.addMeasureAxis("z", "votes");
               var serie = myChart.addSeries(["name"], dimple.plot.bubble);
               serie.getTooltipText = function(e) {
                 return [
                   e.aggField[0],
                   "Impact " +
-                    (e.cy > 4 ? "défavorable" : "modéré") +
+                    (e.cy > lowestY + (highestY - lowestY) / 2
+                      ? "défavorable"
+                      : "modéré") +
                     " , effort " +
-                    (e.cx > 4 ? "important" : "modéré"),
+                    (e.cx > lowestX + (highestX - lowestX) / 2
+                      ? "important"
+                      : "modéré"),
                   "Opposition " + Math.round((e.cz / totalVotes) * 100) + "%"
                 ];
               };
-              // myChart.addLegend(
-              //   myChart._xPixels(),
-              //   370,
-              //   myChart._widthPixels(),
-              //   20,
-              //   "left"
-              // );
 
               myChart.draw();
+
+              if (x.overrideMin > 0) {
+                x._origin = myChart._xPixels();
+              }
+              if (y.overrideMin > 0) {
+                y._origin = myChart._yPixels() + myChart._heightPixels();
+              }
 
               d3.selection.prototype.moveToBack = function() {
                 return this.each(function() {
