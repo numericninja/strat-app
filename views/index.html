@@ -1795,12 +1795,12 @@
                   e.aggField[0],
                   "Impact " +
                     (e.cy > lowestY + (highestY - lowestY) / 2
-                      ? "favorable"
-                      : "modéré") +
+                      ? "plutôt favorable"
+                      : "moins favorable") +
                     " , effort " +
                     (e.cx > lowestX + (highestX - lowestX) / 2
-                      ? "important"
-                      : "modéré"),
+                      ? "plutôt important"
+                      : "moins important"),
                   "Soutien " + Math.round((e.cz / totalVotes) * 100) + "%"
                 ];
               };
@@ -1941,12 +1941,12 @@
                   e.aggField[0],
                   "Impact " +
                     (e.cy > lowestY + (highestY - lowestY) / 2
-                      ? "défavorable"
-                      : "modéré") +
+                      ? "plutôt défavorable"
+                      : "moins défavorbale") +
                     " , effort " +
                     (e.cx > lowestX + (highestX - lowestX) / 2
-                      ? "important"
-                      : "modéré"),
+                      ? "plutôt important"
+                      : "moins important"),
                   "Opposition " + Math.round((e.cz / totalVotes) * 100) + "%"
                 ];
               };
