@@ -30,6 +30,216 @@
 
     <div v-cloak id="app">
       <header></header>
+      <transition name="fade">
+        <aside
+          v-if="menuBool"
+          class="menu is-fixed-top menu-above-fixed slideInRight animated"
+        >
+          <p class="has-text-right menu-close" @click="menuBool=false">
+            ×
+          </p>
+          <section class="section menu-content">
+            <div class="container">
+              <h1 class="title">
+                À quoi sert cet outil&nbsp;?
+              </h1>
+              <p class="menu-label">
+                Une aide à la pensée stratégique
+              </p>
+              <p>
+                Une personne, un groupe, des militants, un rond-point, une
+                assemblée générale... peuvent se saisir de cet outil afin de
+                mener une réflexion stratégique structurée.
+              </p>
+              <ul class="menu-list margin-top-xs">
+                <li>
+                  <a class="no-click"
+                    >En se posant des questions de fond à propos du
+                    mouvement&nbsp;: sa finalité, les actions à mettre en place,
+                    le dénouement souhaité, etc.</a
+                  >
+                </li>
+                <li>
+                  <a class="no-click"
+                    >En soutenant et en s'inspirant des idées remontées par la
+                    communauté.</a
+                  >
+                </li>
+                <li>
+                  <a class="no-click"
+                    >En soumettant de nouvelles propositions afin d'en faire
+                    béneficier l'ensemble de la communauté.</a
+                  >
+                </li>
+                <li>
+                  <a class="no-click"
+                    >En formulant leur propre lecture du mouvement et leur
+                    propre vision pour son avenir.</a
+                  >
+                </li>
+              </ul>
+
+              <p class="menu-label margin-top-medium">
+                Exemple de lecture stratégique
+              </p>
+              <p class="help">
+                Ce qui suit n'est qu'une simple illustration. Le flux de
+                contributions étant continu et la sensibilité de chacun pouvant
+                être différente, l'exemple qui suit n'est qu'une analyse
+                subjective et à un moment donné. Son seul but est d'illustrer
+                l'utilisation pouvant être faite de cet outil numérique. En
+                effet, une des forces du mouvement des Gilets Jaunes est sa
+                diversité et le fait que ses membres soient redevenus des
+                citoyens à part entière qui mènent leur propres réflexions et en
+                formulent les conclusions, au lieu d'être des consommateurs
+                passifs qui laissent des politiciens de carrières réfléchir à
+                leur place.
+              </p>
+              <h2 class="title is-5 margin-top-medium">
+                La finalité du mouvement
+              </h2>
+              <p>
+                Le mouvement des Gilets Jaunes vise à instaurer une meilleure
+                démocratie, plus inclusive, en donnant des pouvoirs étendus aux
+                citoyens. Il faut absolument que la politique serve l'intérêt de
+                l'ensemble des citoyens. L'augementation des injustices fiscale,
+                sociale et juridique auxquels nous assistons depuis des
+                décennies n'est plus tolérable. Le système politique actuel est
+                à la dérive, il est de plus en plus faible avec les forts et dur
+                avec les faibles.
+              </p>
+              <p class="margin-top-small">
+                Il faut que les petits patrons, les artisans et les commerçants
+                soient favorisés fiscalement par rapport aux grands groupes. Que
+                les classes moyenne et pauvre arrêtent de supporter l'effort de
+                l'impôt de manière disproportionnée en comparaison avec les
+                ultra-riches.
+              </p>
+              <p class="margin-top-small">
+                Il faut en finir avec la suppression des services publiques
+                essentiels, des hopitaux, des gares, des bureaux de poste... et
+                veiller au développement équitable de l'ensemble du territoire
+                français. Il faut arrêter la marche effrénée des privatisations
+                des biens communs au profit de quelques fortunes privées.
+              </p>
+              <h2 class="title is-5 margin-top-medium">
+                Les revendications
+              </h2>
+              <p>
+                Ces aspirations se traduisent par des revendications simples et
+                claires. Le Referendum d'Initiative Citoyenne en toutes matières
+                doit être inscrit dans la constitution française. Il doit
+                permettre aux citoyens de proposer et d'abroger une loi, de
+                modifier la constitution, et de révoquer un élu.
+              </p>
+              <p class="margin-top-small">
+                L'executif doit supprimer, tout de suite, la TVA sur les
+                produits alimentaires de première nécessité. Il doit rétablir
+                l'ISF en veillant à ce que le capital investi dans l'économie
+                réelle soit totalement éxonéré de charges, et réserver les aides
+                du CICE aux petites et moyennes entreprises.
+              </p>
+              <p class="margin-top-small">
+                Tous les travailleurs doivent pouvoir vivre dignement de leurs
+                revenus. Nos aînés doivent pouvoir bénéficier de retraites
+                décentes qui leur permettent de subvenir à leurs besoins et de
+                pouvoir combler d'attentions leurs enfants et petits enfants.
+              </p>
+              <p class="margin-top-small">
+                Des peines planchers de trois ans de prison ferme doivent être
+                instaurées pour les fraudeurs fiscaux. Les lois doivent être
+                endurcies et plus de contrôles fiscaux doivent être effectués
+                pour les plus grandes fortunes afin de ramener 100Md€ d'évasion
+                et d'optimisation fiscales.
+              </p>
+              <h2 class="title is-5 margin-top-medium">
+                Choix stratégiques
+              </h2>
+              <p>
+                Pour y parvenir, nous devons gagner le rapport de force avec le
+                pouvoir politique qui n'entend que celà. Nous devons oeuvrer
+                pour rallier l'ensemble des Français à la cause des Gilets
+                Jaunes en gagnant la bataille de la communication et de l'image,
+                en faisant connaître nos revendications, et en faisant savoir
+                qu'elles sont démocratiques.
+              </p>
+              <p class="margin-top-small">
+                Nous allons travailler, localement dans chaque commune, chaque
+                quartier et sur chaque rond point, à convaincre les personnes
+                syndiquées, les gendarmes et policiers, les profs et
+                fonctionnaires, les salariés, les artisants, commerçants et
+                chefs d'entreprises que nos revendications sont justes et
+                qu'elles leur sont favorables.
+              </p>
+              <p class="margin-top-small">
+                Avec l'arrivée du beau temps, nous allons devenir de plus en
+                plus visibles et nombreux, et nous allons présenter une image
+                positive, belle, optimiste et pleine d'espoir partout où nous
+                pouvons : sur les ronds points, dans les manifestations, sur les
+                réseaux sociaux, et dans les médias traditionnels et
+                alternatifs.
+              </p>
+              <h2 class="title is-5 margin-top-medium">
+                Actions de terrain
+              </h2>
+              <p>
+                Concrètement, nous appelons à réinvestir les ronds points de
+                manière festive et utile : barbecues, piqueniques, musique,
+                projections de films, débats citoyens, assemblées
+                constituantes... Nous allons continuer à manifester tous les
+                samedis car si nous arrêtons, le pouvoir va encore dire que nous
+                n'existons plus et que le mouvement s'est essouflé. Nous allons
+                dédoubler les actions symboliques de bloquage et de protestation
+                afin de maintenir le pouvoir executif sous pression.
+              </p>
+              <p class="margin-top-small">
+                Nous allons continuer de veiller à ne pas tomber dans le piège
+                des listes électorales ou la récuperation par des partis
+                politiques de droite comme de gauche. Nos revendications doivent
+                rester politiques mais apartisanes. Avant d'être de gauche ou de
+                droite, notre projet est surtout citoyen et bénéficie à
+                l'ensemble des Français. Tout le monde, quelle que soit son
+                étiquette politique, est concerné par une meilleure politique
+                qui mette le citoyen au centre du pouvoir.
+              </p>
+              <h2 class="title is-5 margin-top-medium">
+                Acquis et dénouements
+              </h2>
+              <p>
+                D'ores et déjà, une révolution est faite dans les esprits. Les
+                Français ont pris conscience de leur pouvoir et de leur rôle de
+                citoyens. Plus personne ne pourra nous arracher celà et nous
+                n'allons plus jamais attendre, impuissants, qu'un quelconque
+                parti ou syndicat vienne à la rescousse du peuple. Par notre
+                action et par l'ancrage du mouvement depuis plusieurs mois, nous
+                avons semé des graines pour les générations à venir.
+              </p>
+              <p class="margin-top-small">
+                Nous continuerons notre mobilisations jusqu'à ce qu'une nouvelle
+                constitution — qui contient le RIC en toutes matières — soit
+                adoptée par le peuple à l'issu d'un processus constituant
+                impliquant l'ensemble des citoyens. Nous ne nous arrêterons pas
+                avant de sortir des traités de l'UE qui retirent une part de la
+                souveraineté nationale et qui ont été imposés au peuple en dépit
+                du vote démocratique.
+              </p>
+              <p class="margin-top-small">
+                Dès l'instauration de cette nouvelle constitution, nous
+                utiliserons le RIC pour annuler la privatisation des biens et
+                des entreprises qui rapportent de l'argent et dont l'existence
+                et la construction ont dépendu de l'investissement de l'État.
+                Nous utiliserons également le RIC pour proposer la révocation de
+                tous les responsables politiques actuels qui se sont rendus
+                complices des violences faites aux manifestants et de la
+                restriction de la liberté d'expression. Nous resterons vigilants
+                pour que la France demeure une lueur d'espoir et un exemple à
+                suivre en termes de démocratie et de droits de l'Homme pour le
+                monde entier.
+              </p>
+            </div>
+          </section>
+        </aside>
+      </transition>
       <main>
         <section class="section">
           <div class="container">
@@ -44,11 +254,13 @@
               permet de <strong>remonter</strong> et d'<strong>explorer</strong>
               différentes idées de façon structurée.
               <span class="has-text-grey"
-                >Ce n'est ni un sondage ni un vote. Les résultats qui y figurent
-                ne se prétendent pas représentatifs des opinions des Français,
-                ni même de ceux de l'ensemble des Gilets Jaunes. C'est
-                simplement une invitation à approfondir et à élargir les choix
-                qui s'offrent à chacun.</span
+                ><span class="menu-call has-text-info" @click="menuBool=true"
+                  >Ce n'est ni un sondage ni un vote.</span
+                >
+                Les résultats qui y figurent ne se prétendent pas représentatifs
+                des opinions des Français, ni même de ceux de l'ensemble des
+                Gilets Jaunes. C'est simplement une invitation à approfondir et
+                à élargir les choix qui s'offrent à chacun.</span
               >
             </p>
             <div class="has-text-right margin-top-medium">
@@ -900,7 +1112,8 @@
             strategieCont: 4,
             jourCont: 3,
             actionsouhaiteeCont: 9,
-            actionpeusouhaiteeCont: 8
+            actionpeusouhaiteeCont: 8,
+            menuBool: false
           };
         },
         methods: {
@@ -1519,6 +1732,12 @@
               );
             })
             .catch(error => console.log(error));
+
+          document.body.addEventListener("keyup", e => {
+            if (e.keyCode === 27) {
+              zis.menuBool = false;
+            }
+          });
         },
         watch: {
           lesfinalites: function(jsondata) {
